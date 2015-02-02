@@ -1,0 +1,126 @@
+<form action='index' method='get' name='reg'>
+  <select name='currency'>
+    <option value='Доллар США'>Доллар США</option>
+    <option value='Российский рубль'>Российский рубль</option>
+    <option value='Белорусский рубль'>Белорусский рубль</option>
+    <option value='Евро'>Евро</option>
+  </select>
+<input type='submit' value='Показать'>
+<br>
+<b>Сейчас показано в <%=@presenter.currency%></b>
+
+<table border='1' cellspacing='1' cellpadding='1' width='100%'>
+ <tr>
+  <td> <b> Тип долга </b></td>
+  <td> <b>Задолженность за 2014 г.,млн</b></td>
+  <td> <b>Задолженность за 2015 г.,млн</b></td>
+  <td> <b>Изменение в млн </b></td>
+  <td> <b>Изменение в %</b></td>
+ </tr>
+ <tr>
+  <td> <b>Основной долг, в т.ч.:</b></td>
+  <td> <b> <%= rounding(@presenter.principal_debt_first_year) %></b></td>
+  <td> <b><%= rounding(@presenter.principal_debt_second_year) %></b></td>
+  <td> <b><%= color_text_red_or_green_and_rounding(@presenter.change_principal_debt) %> </b></td>
+  <td> <b><%= color_text_red_or_green_for_percent(@presenter.changes_in_percent_principal_debt) %> </b></td>
+ </tr>
+ <tr>
+  <td> Срочный долг </td>
+  <td> <%= rounding(@presenter.amount_of_term_debt_first_year) %> </td>
+  <td>  <%= rounding(@presenter.amount_of_term_debt_second_year) %></td>
+  <td> <%= color_text_red_or_green_and_rounding(@presenter.change_term_debt) %> </td>
+  <td> <%= color_text_red_or_green_for_percent(@presenter.changes_in_percent_term_debt) %> </td>
+  </td>
+ </tr>
+ <tr>
+  <td> Просроченный долг </td>
+  <td> <%=rounding(@presenter.amount_of_overdue_debt_first_year) %> </td>
+  <td><%= rounding(@presenter.amount_of_overdue_debt_second_year) %> </td>
+  <td><%= color_text_red_or_green_and_rounding(@presenter.change_overdue_debt) %> </td>
+  <td> <%= color_text_red_or_green_for_percent(@presenter.changes_in_percent_overdue_debt) %>
+ </tr>
+
+ <tr>
+  <td> Пролонгированный долг</td>
+  <td> <%= rounding(@presenter.amount_of_prolonged_debt_first_year) %> </td>
+  <td> <%= rounding(@presenter.amount_of_prolonged_debt_second_year) %></td>
+  <td> <%= color_text_red_or_green_and_rounding(@presenter.change_prolonged_debt) %> </td>
+  <td> <%= color_text_red_or_green_for_percent(@presenter.changes_in_percent_prolonged_debt) %>
+
+ </tr>
+ <tr>
+  <td><b>Проценты, в т.ч.:</b></td>
+  <td> <b><%=  rounding(@presenter.interest_first_year) %></b></td>
+  <td> <b><%=  rounding(@presenter.interest_second_year) %></b></td>
+  <td> <b><%= color_text_red_or_green_and_rounding(@presenter.change_interest) %></b></td>
+  <td> <b><%= color_text_red_or_green_for_percent(@presenter.changes_in_percent_interest) %></b>
+
+ </tr>
+ <tr>
+  <td> Срочные проценты</td>
+  <td> <%=rounding(@presenter.amount_of_urgent_interest_first_year) %></td>
+  <td> <%=rounding(@presenter.amount_of_urgent_interest_second_year) %></td>
+  <td><%= color_text_red_or_green_and_rounding(@presenter.change_urgent_interest) %> </td>
+  <td> <%= color_text_red_or_green_for_percent(@presenter.changes_in_percent_urgent_interest) %>
+
+ </tr>
+ <tr>
+  <td> Просроченные проценты</td>
+  <td> <%=  rounding(@presenter.amount_of_overdue_interest_first_year) %></td>
+  <td> <%=  rounding(@presenter.amount_of_overdue_interest_second_year) %></td>
+  <td><%= color_text_red_or_green_and_rounding(@presenter.change_overdue_interest) %> </td>
+  <td> <%= color_text_red_or_green_for_percent(@presenter.changes_in_percent_overdue_interest) %>
+
+ </tr>
+ <tr>
+  <td><b> Итого </b></td>
+  <td> <b><%=  rounding(@presenter.total_first_year) %></b></td>
+  <td> <b><%= rounding(@presenter.total_second_year) %></b></td>
+  <td> <b><%= color_text_red_or_green_and_rounding(@presenter.total_change_debts) %></b></td>
+  <td> <b><%= color_text_red_or_green_for_percent(@presenter.total_changes_in_percent)%></b></td>
+ </tr>
+</table>
+<br>
+
+<b>Курс доллара на сегодняшнйи день, согласно сайта: http://www.tut.by/ составляет <%= @presenter.count_kurs %> белорусских рублей</b>
+<br>Таблица действительна только при пересчете с беллоруских рублей, в ином случае цифра валюты будет умножена на текущий курс доллара в беларуских рублях.
+<table border='1' cellspacing='1' cellpadding='1' width='100%'>
+ <tr>
+  <td> <b> Тип долга </b></td>
+  <td> <b>Задолженность за 2014 г.,млн</b></td>
+  <td> <b>Задолженность за 2015 г.,млн</b></td>
+  <td> <b>Изменение в млн </b></td>
+
+ </tr>
+ <tr>
+  <td><b> Итого </b></td>
+  <td> <b><%=  rounding(@presenter.conversion_total_usb_first_year) %></b></td>
+  <td> <b><%= rounding(@presenter.conversion_total_usb_second_year) %></b></td>
+  <td> <b><%= color_text_red_or_green_and_rounding(@presenter.conversion_total_usb_change_debts) %></b></td>
+
+ </tr>
+</table>
+<br>
+
+<b>Пересчитать по другому курсу: </b>
+<form action='index' method='get' name='reg'>
+<input type="text" name="currency_conversion" value='Сюда ввести новый курс' >
+<input type='submit' value='Пересчитать'>
+<br>
+
+<table border='1' cellspacing='1' cellpadding='1' width='100%'>
+ <tr>
+  <td> <b> Тип долга </b></td>
+  <td> <b>Задолженность за 2014 г.,млн</b></td>
+  <td> <b>Задолженность за 2015 г.,млн</b></td>
+  <td> <b>Изменение в млн </b></td>
+
+ </tr>
+ <tr>
+  <td><b> Итого </b></td>
+  <td> <b><%=  rounding(@presenter.currency_conversion_total_first_year) %></b></td>
+  <td> <b><%= rounding(@presenter.currency_conversion_total_second_year) %></b></td>
+  <td> <b><%= color_text_red_or_green_and_rounding(@presenter.currency_conversion_total_change_debts) %></b></td>
+
+ </tr>
+</table>
